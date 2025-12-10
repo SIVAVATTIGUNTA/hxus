@@ -15,82 +15,120 @@ const solutions = [
     title: "Direct Sourcing",
     description: "Build private talent pools and branded talent communities to reduce agency dependency and costs.",
     href: "/solutions/direct-sourcing",
-    gradient: "from-primary/20 to-primary/5",
+    color: "from-primary to-primary/60",
   },
   {
     icon: Globe2,
     title: "Global Staffing",
     description: "Multi-country hiring and contingent workforce support with local compliance handled by partners.",
     href: "/solutions/global-staffing",
-    gradient: "from-blue-500/20 to-blue-500/5",
+    color: "from-blue-500 to-blue-500/60",
   },
   {
     icon: Bot,
     title: "Autonomous AI Agents",
     description: "AI co-pilots that assist recruiters and hiring managers in automating repetitive tasks.",
     href: "/services/ai-agents",
-    gradient: "from-purple-500/20 to-purple-500/5",
+    color: "from-purple-500 to-purple-500/60",
   },
   {
     icon: BarChart2,
     title: "Data & Insights",
     description: "Market rate intelligence, performance dashboards, and real-time analytics for better decisions.",
     href: "/solutions/data-insights",
-    gradient: "from-green-500/20 to-green-500/5",
+    color: "from-emerald-500 to-emerald-500/60",
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 40, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.7,
+      ease: "easeOut" as const,
+    },
+  },
+};
+
 export const SolutionsSection = () => {
   return (
-    <section className="py-16 lg:py-24 bg-muted/50">
-      <div className="container mx-auto px-4 lg:px-8">
+    <section className="py-20 lg:py-32 bg-gradient-section-alt relative overflow-hidden">
+      {/* Decorative background */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent" />
+      
+      <div className="container mx-auto px-4 lg:px-8 relative">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-12"
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center max-w-4xl mx-auto mb-16"
         >
-          <span className="inline-block px-4 py-2 rounded-full bg-accent text-accent-foreground text-sm font-medium mb-4">
+          <motion.span
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="inline-block px-5 py-2.5 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-6"
+          >
             Solutions
-          </span>
-          <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
+          </motion.span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 tracking-tight">
             Solutions Tailored to Your Workforce Strategy
           </h2>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-muted-foreground text-lg lg:text-xl leading-relaxed">
             End-to-end solutions designed around your specific challenges — from cost control 
             and speed to quality and compliance.
           </p>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="grid md:grid-cols-2 gap-6 lg:gap-8 mb-10"
+          className="grid md:grid-cols-2 gap-6 lg:gap-8 mb-14"
         >
           {solutions.map((solution, index) => (
-            <Link
-              key={index}
-              to={solution.href}
-              className="relative bg-card rounded-2xl p-8 shadow-soft hover:shadow-medium transition-all hover:-translate-y-1 group overflow-hidden"
-            >
-              <div className={`absolute inset-0 bg-gradient-to-br ${solution.gradient} opacity-0 group-hover:opacity-100 transition-opacity`} />
-              <div className="relative">
-                <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <solution.icon className="w-7 h-7 text-primary" />
+            <motion.div key={index} variants={itemVariants}>
+              <Link
+                to={solution.href}
+                className="relative block bg-card rounded-3xl p-10 shadow-soft hover:shadow-strong transition-all duration-500 group overflow-hidden border border-border/50 hover:border-primary/30 hover:-translate-y-2"
+              >
+                {/* Gradient overlay on hover */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${solution.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
+                
+                <div className="relative">
+                  <motion.div
+                    whileHover={{ scale: 1.15, rotate: 10 }}
+                    transition={{ type: "spring", stiffness: 400 }}
+                    className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${solution.color} flex items-center justify-center mb-8`}
+                  >
+                    <solution.icon className="w-8 h-8 text-white" />
+                  </motion.div>
+                  <h3 className="text-2xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors duration-300">
+                    {solution.title}
+                  </h3>
+                  <p className="text-muted-foreground text-lg mb-6 leading-relaxed">{solution.description}</p>
+                  <span className="inline-flex items-center text-primary text-base font-semibold group-hover:gap-3 gap-2 transition-all duration-300">
+                    Learn more
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                  </span>
                 </div>
-                <h3 className="text-xl font-semibold text-foreground mb-3 group-hover:text-primary transition-colors">
-                  {solution.title}
-                </h3>
-                <p className="text-muted-foreground mb-4">{solution.description}</p>
-                <span className="inline-flex items-center text-primary text-sm font-medium">
-                  Learn more
-                  <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                </span>
-              </div>
-            </Link>
+              </Link>
+            </motion.div>
           ))}
         </motion.div>
 
@@ -102,9 +140,9 @@ export const SolutionsSection = () => {
           className="text-center"
         >
           <Link to="/solutions">
-            <Button variant="outline" size="lg">
+            <Button variant="outline" size="lg" className="text-base px-8 py-6">
               Explore All Solutions
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
           </Link>
         </motion.div>

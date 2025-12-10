@@ -24,47 +24,88 @@ const reasons = [
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut" as const,
+    },
+  },
+};
+
 export const WhyUsSection = () => {
   return (
-    <section className="py-16 lg:py-24 bg-foreground text-background">
-      <div className="container mx-auto px-4 lg:px-8">
+    <section className="py-20 lg:py-32 bg-gradient-dark text-primary-foreground relative overflow-hidden">
+      {/* Animated background pattern */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary rounded-full blur-3xl animate-pulse-glow" />
+        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-primary/50 rounded-full blur-3xl" />
+      </div>
+      
+      <div className="container mx-auto px-4 lg:px-8 relative">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-12"
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center max-w-4xl mx-auto mb-16"
         >
-          <span className="inline-block px-4 py-2 rounded-full bg-background/10 text-background text-sm font-medium mb-4">
+          <motion.span
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="inline-block px-5 py-2.5 rounded-full bg-primary-foreground/10 text-primary-foreground text-sm font-semibold mb-6 backdrop-blur-sm border border-primary-foreground/20"
+          >
             Why HX Consulting
-          </span>
-          <h2 className="text-3xl lg:text-4xl font-bold mb-4">
+          </motion.span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 tracking-tight">
             Why Leading Enterprises Choose Us
           </h2>
-          <p className="text-background/70 text-lg">
+          <p className="text-primary-foreground/70 text-lg lg:text-xl leading-relaxed">
             We combine strategic consulting with hands-on delivery, human expertise with AI, 
             and global reach with local knowledge.
           </p>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
+          className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8"
         >
           {reasons.map((reason, index) => (
-            <div
+            <motion.div
               key={index}
-              className="bg-background/5 backdrop-blur-sm rounded-2xl p-6 hover:bg-background/10 transition-colors border border-background/10"
+              variants={itemVariants}
+              whileHover={{ y: -8, scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              className="bg-primary-foreground/5 backdrop-blur-md rounded-3xl p-8 hover:bg-primary-foreground/10 transition-all duration-300 border border-primary-foreground/10 hover:border-primary/50"
             >
-              <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center mb-5">
-                <reason.icon className="w-6 h-6 text-primary-foreground" />
-              </div>
-              <h3 className="text-lg font-semibold mb-2">{reason.title}</h3>
-              <p className="text-background/60 text-sm">{reason.description}</p>
-            </div>
+              <motion.div
+                whileHover={{ rotate: 10, scale: 1.1 }}
+                transition={{ type: "spring", stiffness: 400 }}
+                className="w-14 h-14 rounded-2xl bg-primary flex items-center justify-center mb-6"
+              >
+                <reason.icon className="w-7 h-7 text-primary-foreground" />
+              </motion.div>
+              <h3 className="text-xl font-bold mb-3">{reason.title}</h3>
+              <p className="text-primary-foreground/60 text-base leading-relaxed">{reason.description}</p>
+            </motion.div>
           ))}
         </motion.div>
       </div>

@@ -56,8 +56,11 @@
 
     /* Gradients */
     --gradient-magenta: linear-gradient(135deg, hsl(var(--magenta)) 0%, hsl(330 100% 56%) 100%);
-    --gradient-hero: linear-gradient(180deg, hsl(var(--gray-50)) 0%, hsl(var(--background)) 100%);
+    --gradient-hero: linear-gradient(180deg, hsl(330 100% 98%) 0%, hsl(var(--background)) 100%);
     --gradient-radial: radial-gradient(ellipse at top, hsl(var(--magenta-light)) 0%, transparent 50%);
+    --gradient-section-alt: linear-gradient(180deg, hsl(220 20% 97%) 0%, hsl(220 20% 99%) 100%);
+    --gradient-dark: linear-gradient(135deg, hsl(222 47% 11%) 0%, hsl(222 47% 8%) 100%);
+    --gradient-mesh: radial-gradient(at 40% 20%, hsl(330 100% 96%) 0px, transparent 50%), radial-gradient(at 80% 0%, hsl(220 20% 98%) 0px, transparent 50%), radial-gradient(at 0% 50%, hsl(330 100% 98%) 0px, transparent 50%);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -138,6 +141,18 @@
     background: var(--gradient-radial);
   }
 
+  .bg-gradient-section-alt {
+    background: var(--gradient-section-alt);
+  }
+
+  .bg-gradient-dark {
+    background: var(--gradient-dark);
+  }
+
+  .bg-gradient-mesh {
+    background: var(--gradient-mesh);
+  }
+
   .shadow-soft {
     box-shadow: var(--shadow-soft);
   }
@@ -166,10 +181,28 @@
     animation: scaleIn 0.5s ease-out forwards;
   }
 
+  .animate-slide-up {
+    animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s linear infinite;
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.1), transparent);
+    background-size: 200% 100%;
+  }
+
   @keyframes fadeUp {
     from {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(30px);
     }
     to {
       opacity: 1;
@@ -190,6 +223,44 @@
     to {
       opacity: 1;
       transform: scale(1);
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(60px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% {
+      box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+    }
+    50% {
+      box-shadow: 0 0 40px hsl(var(--primary) / 0.5);
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
     }
   }
 }
