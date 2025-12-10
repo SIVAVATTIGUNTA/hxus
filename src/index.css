@@ -1,0 +1,196 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap');
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 47.4% 11.2%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 47.4% 11.2%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47.4% 11.2%;
+
+    /* HX Consulting Magenta */
+    --primary: 330 100% 46%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 14.3% 95.9%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
+
+    --accent: 330 100% 96%;
+    --accent-foreground: 330 100% 46%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 330 100% 46%;
+
+    --radius: 0.75rem;
+
+    /* Custom HX variables */
+    --magenta: 330 100% 46%;
+    --magenta-light: 330 100% 96%;
+    --magenta-dark: 330 100% 36%;
+    --gray-50: 220 20% 98%;
+    --gray-100: 220 14.3% 95.9%;
+    --gray-200: 220 13% 91%;
+    --gray-500: 220 8.9% 46.1%;
+    --gray-700: 222.2 47.4% 21.2%;
+    --gray-900: 222.2 47.4% 11.2%;
+
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -2px hsl(var(--gray-900) / 0.08);
+    --shadow-medium: 0 8px 30px -4px hsl(var(--gray-900) / 0.12);
+    --shadow-strong: 0 20px 50px -10px hsl(var(--gray-900) / 0.15);
+    --shadow-magenta: 0 8px 30px -4px hsl(var(--magenta) / 0.25);
+
+    /* Gradients */
+    --gradient-magenta: linear-gradient(135deg, hsl(var(--magenta)) 0%, hsl(330 100% 56%) 100%);
+    --gradient-hero: linear-gradient(180deg, hsl(var(--gray-50)) 0%, hsl(var(--background)) 100%);
+    --gradient-radial: radial-gradient(ellipse at top, hsl(var(--magenta-light)) 0%, transparent 50%);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 330 100% 46%;
+  }
+
+  .dark {
+    --background: 222.2 47.4% 6%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 47.4% 8%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 47.4% 8%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 330 100% 56%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 330 50% 15%;
+    --accent-foreground: 330 100% 70%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 330 100% 56%;
+
+    --magenta: 330 100% 56%;
+    --magenta-light: 330 50% 15%;
+    --gray-50: 222.2 47.4% 8%;
+    --gray-100: 217.2 32.6% 12%;
+    --gray-200: 217.2 32.6% 17.5%;
+    --gray-500: 215 20.2% 55.1%;
+    --gray-700: 210 30% 75%;
+    --gray-900: 210 40% 98%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Manrope', system-ui, sans-serif;
+  }
+}
+
+@layer utilities {
+  .text-gradient-magenta {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-magenta);
+  }
+
+  .bg-gradient-hero {
+    background: var(--gradient-hero);
+  }
+
+  .bg-gradient-radial {
+    background: var(--gradient-radial);
+  }
+
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .shadow-medium {
+    box-shadow: var(--shadow-medium);
+  }
+
+  .shadow-strong {
+    box-shadow: var(--shadow-strong);
+  }
+
+  .shadow-magenta {
+    box-shadow: var(--shadow-magenta);
+  }
+
+  .animate-fade-up {
+    animation: fadeUp 0.6s ease-out forwards;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.5s ease-out forwards;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+}
