@@ -4,9 +4,9 @@ import { Linkedin, Twitter, Mail, MapPin } from "lucide-react";
 const footerLinks = {
   platform: [
     { label: "Platform Overview", href: "/platform" },
-    { label: "AI Matching Engine", href: "/platform" },
+    { label: "AI Matching Engine", href: "/platform#matching" },
     { label: "Analytics & Insights", href: "/solutions/data-insights" },
-    { label: "Integrations", href: "/platform" },
+    { label: "Integrations", href: "/platform#integrations" },
   ],
   services: [
     { label: "Business Consulting", href: "/services/business-consulting" },

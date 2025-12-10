@@ -1,14 +1,8 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -35,10 +29,22 @@ const navItems = [
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const hoverTimeout = useRef<NodeJS.Timeout | null>(null);
   const location = useLocation();
 
+  const openServices = () => {
+    if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
+    setServicesOpen(true);
+  };
+
+  const closeServices = () => {
+    if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
+    hoverTimeout.current = setTimeout(() => setServicesOpen(false), 180);
+  };
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/50">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-primary/10 via-background/85 to-primary/5 backdrop-blur-xl border-b border-border/60 shadow-soft">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
@@ -61,34 +67,46 @@ export const Header = () => {
 
               if (item.children) {
                 return (
-                  <DropdownMenu key={item.label}>
-                    <DropdownMenuTrigger asChild>
-                      <button
-                        className={cn(
-                          "px-4 py-2 rounded-lg text-sm font-medium transition-colors inline-flex items-center gap-1",
-                          isActive
-                            ? "text-primary bg-accent"
-                            : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                        )}
+                  <div
+                    key={item.label}
+                    className="relative group"
+                    onMouseEnter={openServices}
+                    onMouseLeave={closeServices}
+                  >
+                    <button
+                      className={cn(
+                        "px-4 py-2 rounded-lg text-sm font-medium transition-colors inline-flex items-center gap-1",
+                        isActive
+                          ? "text-primary bg-accent"
+                          : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                      )}
+                    >
+                      {item.label}
+                      <ChevronDown className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" />
+                    </button>
+                    {servicesOpen && (
+                      <div className="absolute left-0 mt-2 w-64 rounded-xl bg-card border border-border shadow-soft py-2"
+                        onMouseEnter={openServices}
+                        onMouseLeave={closeServices}
                       >
-                        {item.label}
-                        <ChevronDown className="w-4 h-4" />
-                      </button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="start" className="min-w-[240px]">
-                      {item.children.map((child) => (
-                        <DropdownMenuItem key={child.href} asChild>
+                        {item.children.map((child) => (
                           <Link
+                            key={child.href}
                             to={child.href}
-                            className="flex items-center gap-2"
-                            data-active={location.pathname.startsWith(child.href)}
+                            onClick={() => setServicesOpen(false)}
+                            className={cn(
+                              "block px-4 py-2 text-sm transition-colors",
+                              location.pathname.startsWith(child.href)
+                                ? "text-primary bg-accent"
+                                : "text-foreground hover:bg-muted"
+                            )}
                           >
-                            <span className="text-sm">{child.label}</span>
+                            {child.label}
                           </Link>
-                        </DropdownMenuItem>
-                      ))}
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 );
               }
 
@@ -112,9 +130,9 @@ export const Header = () => {
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-3">
             <Link to="/contact">
-              <Button variant="ghost" size="sm">
+              {/* <Button variant="ghost" size="sm">
                 Contact
-              </Button>
+              </Button> */}
             </Link>
             <Link to="/contact">
               <Button size="sm">Book a Demo</Button>
@@ -132,7 +150,7 @@ export const Header = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+          {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
