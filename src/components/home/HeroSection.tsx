@@ -31,8 +31,24 @@ const highlightVariants: Variants = {
 export const HeroSection = () => {
   return (
     <section className="relative overflow-hidden bg-gradient-hero">
+      {/* Background video */}
+      <div className="absolute inset-0">
+        <video
+          className="w-full h-full object-cover opacity-70"
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1600&q=80"
+        >
+          <source src="https://cdn.coverr.co/videos/coverr-aerial-of-downtown-4465/1080p.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/80 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/65 via-transparent to-background/70" />
+      </div>
+
       {/* Background decoration */}
-      <div className="absolute inset-0 bg-gradient-radial opacity-60" />
+      <div className="absolute inset-0 bg-gradient-radial opacity-50 pointer-events-none" />
       <motion.div
         aria-hidden
         className="absolute top-10 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl"
@@ -47,7 +63,7 @@ export const HeroSection = () => {
       />
 
       <div className="container mx-auto px-4 lg:px-8 py-20 lg:py-32 relative">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-5xl mx-auto text-center bg-background/60 backdrop-blur-xl border border-border/60 rounded-3xl px-6 lg:px-10 py-10 shadow-soft">
           <motion.div
             initial="hidden"
             animate="show"
